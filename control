@@ -1,0 +1,9 @@
+Package: cn.sttt.textcolor
+Name: WeChat TextColor
+Version: 0.0.1
+Architecture: iphoneos-arm64e
+Description: A very boring iOS wechat tweak 
+Maintainer: sttt
+Author: sttt
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000)
