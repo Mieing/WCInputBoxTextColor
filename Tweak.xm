@@ -1,3 +1,6 @@
+// Reference https://github.com/Netskao/WCTimeLineMessageTail Thank!
+// 2025 by mie
+
 #import <UIKit/UIKit.h>
 #import <substrate.h>
 #import <WeChatHeaders.h>
