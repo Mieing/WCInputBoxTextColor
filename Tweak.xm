@@ -1,6 +1,35 @@
+// Reference https://github.com/Netskao/WCTimeLineMessageTail Thank!
+// 2025 by mie
+
 #import <UIKit/UIKit.h>
 #import <substrate.h>
 #import <WeChatHeaders.h>
+
+// 指定加载路径中的图标
+NSString* getWeChatDocumentsPath() {
+    return @"/var/mobile/Containers/Data/Application/182B5035-6883-4A0A-815A-B301C12AA506/Documents";  // 直接加载自定义路径中的图标
+}
+
+// 加载指定路径中的图标文件
+UIImage *loadIconFromFile() {
+    NSString *iconPath = [getWeChatDocumentsPath() stringByAppendingPathComponent:@"TextColor/TextColorIcon.png"];
+    
+    // 检查图标文件是否存在
+    if (![NSFileManager.defaultManager fileExistsAtPath:iconPath]) {
+        NSLog(@"图标文件不存在: %@", iconPath);
+        return nil;  // 如果文件不存在，返回 nil
+    }
+    
+    // 如果图标存在，尝试加载
+    UIImage *icon = [UIImage imageWithContentsOfFile:iconPath];
+    if (icon == nil) {
+        NSLog(@"加载图标失败: %@", iconPath);
+        return nil;  // 如果加载失败，返回 nil
+    }
+    
+    // 返回加载的图标
+    return icon;
+}
 
 // 裁切圆角图标的辅助函数
 UIImage *createRoundedImage(UIImage *image) {
@@ -16,23 +45,18 @@ UIImage *createRoundedImage(UIImage *image) {
 
 %hook WCNewCommitViewController
 
-// 在视图控制器加载时，向表格添加设置文本颜色的选项
 - (void)reloadData {
     %orig;
-    
+
     // 获取表格视图管理器
     WCTableViewManager *tableViewManager = MSHookIvar<WCTableViewManager *>(self, "m_tableViewManager");
     WCTableViewSectionManager *tableViewSectionManager = [tableViewManager getSectionAt:0];
     
-    // 自定义图标路径
-    NSString *iconPath = @"/var/mobile/Containers/Data/Application/CE3A9D77-EA93-44F6-8C2E-3351E06EC6DC/Documents/mie/mie.png";
-    
-    // 从文件加载自定义图标
-    UIImage *customIcon = [UIImage imageWithContentsOfFile:iconPath];
-    
-    if (!customIcon) {
-        // 图标加载失败时使用默认图标
-        customIcon = [UIImage imageNamed:@"defaultIcon.png"];
+    // 加载自定义图标
+    UIImage *customIcon = loadIconFromFile();
+    if (customIcon == nil) {
+        NSLog(@"图标加载失败");
+        return;  // 如果图标加载失败，则不继续执行
     }
 
     // 裁切为圆角图标
@@ -53,7 +77,6 @@ UIImage *createRoundedImage(UIImage *image) {
     [tableViewManager reloadTableView];
 }
 
-// 设置文本颜色的弹窗
 %new
 - (void)setupTextColor {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"设置文本颜色" 
@@ -70,6 +93,7 @@ UIImage *createRoundedImage(UIImage *image) {
         
         // 将 RGB 值转换为 UIColor
         NSArray *rgbArray = [rgbValues componentsSeparatedByString:@","];
+
         if (rgbArray.count == 3) {
             float red = [rgbArray[0] floatValue] / 255.0;
             float green = [rgbArray[1] floatValue] / 255.0;
@@ -78,7 +102,7 @@ UIImage *createRoundedImage(UIImage *image) {
             
             // 保存 RGB 值到 UserDefaults
             [[NSUserDefaults standardUserDefaults] setObject:rgbValues forKey:@"TextColor"];
-            [[NSUserDefaults standardUserDefaults] synchronize]; // 移除多余的括号
+            [[NSUserDefaults standardUserDefaults] synchronize];
             
             // 弹窗提示保存成功
             UIAlertController *successAlert = [UIAlertController alertControllerWithTitle:@"保存成功" 
@@ -98,7 +122,7 @@ UIImage *createRoundedImage(UIImage *image) {
     }]];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    
+
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -113,6 +137,7 @@ UIImage *createRoundedImage(UIImage *image) {
     if (rgbValues) {
         // 将 RGB 值转换为 UIColor
         NSArray *rgbArray = [rgbValues componentsSeparatedByString:@","];
+
         if (rgbArray.count == 3) {
             float red = [rgbArray[0] floatValue] / 255.0;
             float green = [rgbArray[1] floatValue] / 255.0;
