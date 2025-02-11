@@ -1,7 +1,7 @@
 # WeChat-TextColor
 #### Modify the WeChat text color
 ***
-![WeChat-TextColor Preview](https://github.com/Mieing/WeChat-TextColor/blob/master/effect.jpg)
+![Preview](https://github.com/Mieing/WeChat-TextColor/blob/master/effect.jpg)
 
 ***
 #### **Customize icons**
