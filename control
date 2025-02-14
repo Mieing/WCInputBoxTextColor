@@ -1,0 +1,10 @@
+Package: cn.sttt.inputboxtextcolor
+Name: WCInputBoxTextColor
+Version: 2.0.0
+Architecture: iphoneos-arm64
+Description: A very boring iOS wechat tweak 
+Maintainer: sttt
+Author: sttt
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000)
+Icon: https://Mieing.Github.io/repo/file/wechat.png
