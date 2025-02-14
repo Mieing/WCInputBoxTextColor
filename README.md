@@ -2,7 +2,7 @@
 #### 有能力的重新优化一下项目
 [Pull requests](https://github.com/Mieing/WeChat-TextColor/pulls)
 
-[WCHookPlaceholderColorText](https://github.com/Mieing/WCHookPlaceholderColorText).
+[WCHookPlaceholderColorText](https://github.com/Mieing/WCHookPlaceholderColorText)
 #### Modify the WeChat text color
 ***
 ![Preview](https://github.com/Mieing/WeChat-TextColor/blob/master/effect.jpg)
