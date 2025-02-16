@@ -110,3 +110,11 @@
     %orig;
 }
 %end
+
+
+// %hook RichTextView
+// - (void)setOTextColor:(id)arg1 {
+//	arg1 = [UIColor colorWithRed:255/255.0 green:176/255.0 blue:177/255.0 alpha:255/255.0];
+//	%orig;
+//}
+//%end
